@@ -1,0 +1,17 @@
+name: 'Notion Advent-Calendar Action'
+description: 'This is the action to add an article to Notion's calendar by utilizing Notion API.'
+inputs:
+  title:
+    description: 'article's title'
+    required: true
+    default: ''
+  url:
+    description: 'article's URL'
+    required: true
+    default: ''
+outputs:
+  time:
+    description: 'description'
+runs:
+  using: 'node12'
+  main: 'src/index.ts'
