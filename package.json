@@ -2,8 +2,9 @@
   "name": "notion-advent-calendar-action",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.4.13",
+    "@vercel/ncc": "^0.29.0",
     "typescript": "^4.3.5"
   }
 }
