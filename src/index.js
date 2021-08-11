@@ -2,14 +2,14 @@ const core = require('@actions/core');
 require('dotenv').config();
 const { Client } = require('@notionhq/client');
 
-const NOTION_API_KEY = process.env.NOTION_API_KEY;
+const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
-const notion = new Client({ auth: NOTION_API_KEY});
+const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
   console.log(DATABASE_ID);
-  console.log(NOTION_API_KEY);
+  console.log(NOTION_TOKEN);
   getArticles();
   addArticle();
 }
@@ -19,7 +19,7 @@ const getArticles = async () => {
     const resp = await notion.databases.query({
       database_id: DATABASE_ID,
     });
-    console.log(resp.results[1].properties.Date.date);
+    console.log(resp.results[0].properties.Tags.multi_select);
   } catch (e) {
     console.error(e);
   }
@@ -34,15 +34,26 @@ const addArticle = async () => {
           title: [
             {
               text: {
-                content: "sample",
+                content: "sample3",
               },
             },
           ],
-          // date: {
-          //   start: Date.now().toString(),
-          //   end: null,
-          // }
         },
+        Date: {
+          type: "date",
+          date: {
+            start: new Date().toISOString(),
+            end: null,
+          }
+        },
+        Tags: {
+          type: "multi_select",
+          multi_select: [
+            {
+              name: "Flutter",
+            }
+          ]
+        }
       },
     })
     console.log(resp);
