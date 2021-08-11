@@ -1,6 +1,0 @@
-
-const main = () => {
-  
-}
-
-main();
