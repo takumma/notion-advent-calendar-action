@@ -8,11 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Takuma Ichikawa <kta78599@gmail.com> (https://takumma.net)",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
     "@actions/core": "^1.4.0",
-    "@actions/github": "^5.0.0"
+    "@actions/github": "^5.0.0",
+    "@notionhq/client": "^0.2.4",
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.29.0"
