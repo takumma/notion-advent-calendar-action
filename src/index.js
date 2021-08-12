@@ -17,7 +17,10 @@ const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
-  getArticles();
+  const body = process.env.pull_request_body // process.env.GITHUB_EVENT_PATH.pull_request_body;
+  console.log(body);
+  const { title, date, tags } = getPropertiesFromBody(body);
+  // getArticles();
   addArticle();
 }
 
@@ -26,7 +29,6 @@ const getArticles = async () => {
     const resp = await notion.databases.query({
       database_id: DATABASE_ID,
     });
-    console.log(resp.results[0].properties.Tags.multi_select);
   } catch (e) {
     console.error(e);
   }
@@ -65,9 +67,19 @@ const addArticle = async (title, date, tags) => {
   }
 }
 
+const getPropertiesFromBody = (body) => {
+  const title = ""
+  const date = ""
+  const tags = []
+  return {
+    title,
+    date,
+    tags
+  }
+}
+
 const getPullRequestBody = () => {
   const eventPayload = require(process.env.GITHUB_EVENT_PATH)
 }
 
-// main();
-console.log(process.env.pull_request)
+main();
