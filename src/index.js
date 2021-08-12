@@ -1,7 +1,11 @@
 import core from '@actions/core';
 import { Client } from '@notionhq/client';
+
+// envs for develop
 import { config } from 'dotenv';
 config();
+import dotenvJSON from 'dotenv-json';
+dotenvJSON();
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja.js'
@@ -28,7 +32,7 @@ const getArticles = async () => {
   }
 }
 
-const addArticle = async () => {
+const addArticle = async (title, date, tags) => {
   try {
     const resp = await notion.pages.create({
       parent: { database_id: DATABASE_ID },
@@ -37,7 +41,7 @@ const addArticle = async () => {
           title: [
             {
               text: {
-                content: "sample3",
+                content: title,
               },
             },
           ],
@@ -45,17 +49,13 @@ const addArticle = async () => {
         Date: {
           type: "date",
           date: {
-            start: dayjs(),
+            start: date,
             end: null,
           }
         },
         Tags: {
           type: "multi_select",
-          multi_select: [
-            {
-              name: "Flutter",
-            }
-          ]
+          multi_select: [ ...tags ]
         }
       },
     })
@@ -69,4 +69,5 @@ const getPullRequestBody = () => {
   const eventPayload = require(process.env.GITHUB_EVENT_PATH)
 }
 
-main();
+// main();
+console.log(process.env.pull_request)
