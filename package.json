@@ -9,11 +9,12 @@
   },
   "keywords": [],
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@actions/core": "^1.4.0",
     "@actions/github": "^5.0.0",
     "@notionhq/client": "^0.2.4",
+    "dayjs": "^1.10.6",
     "dotenv": "^10.0.0"
   },
   "devDependencies": {

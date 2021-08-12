@@ -1,6 +1,11 @@
-const core = require('@actions/core');
-require('dotenv').config();
-const { Client } = require('@notionhq/client');
+import core from '@actions/core';
+import { Client } from '@notionhq/client';
+import { config } from 'dotenv';
+config();
+
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja.js'
+dayjs.locale('ja');
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
@@ -8,8 +13,6 @@ const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
-  console.log(DATABASE_ID);
-  console.log(NOTION_TOKEN);
   getArticles();
   addArticle();
 }
@@ -42,7 +45,7 @@ const addArticle = async () => {
         Date: {
           type: "date",
           date: {
-            start: new Date().toISOString(),
+            start: dayjs(),
             end: null,
           }
         },
