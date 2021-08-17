@@ -18,10 +18,34 @@ const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
   const body = process.env.pull_request_body // process.env.GITHUB_EVENT_PATH.pull_request_body;
-  console.log(body);
+  console.log(body.split('\\r\n'));
+  console.log(getPropertiesFromBody(body));
   const { title, date, tags } = getPropertiesFromBody(body);
   // getArticles();
-  addArticle();
+  addArticle(title, date, tags);
+}
+
+const getPropertiesFromBody = (body) => {
+  const result = {
+    title: "",
+    tags: [],
+    date: "",
+  }
+  const propertyTexts = body.split('\\r\n');
+  for(let propertyText of propertyTexts) {
+    const [name, ...props] = propertyText.split(' ');
+    switch (name) {
+      case '/title':
+        result.title = props.join(' ');
+        break;
+      case '/tags':
+        result.tags = props;
+        break;
+      case '/date':
+        result.date = props.join();
+    }
+  }
+  return result
 }
 
 const getArticles = async () => {
@@ -57,24 +81,17 @@ const addArticle = async (title, date, tags) => {
         },
         Tags: {
           type: "multi_select",
-          multi_select: [ ...tags ]
+          multi_select: tags.map((tag) => {
+            return {
+              name: tag
+            };
+          })
         }
       },
     })
     console.log(resp);
   } catch (e) {
     console.error(e);
-  }
-}
-
-const getPropertiesFromBody = (body) => {
-  const title = ""
-  const date = ""
-  const tags = []
-  return {
-    title,
-    date,
-    tags
   }
 }
 
