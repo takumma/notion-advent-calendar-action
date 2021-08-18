@@ -5,6 +5,7 @@
 このアクションは、Githubで管理されている記事をNotionを使ったアドベントカレンダーに記録するものです。[merge-schedule-action](https://github.com/gr2m/merge-schedule-action)と組み合わせることで、
 - 記事の予約投稿
 - Notionのアドベントカレンダーへの自動追加
+
 を行うことができます。想定している利用方法は、下の「Usage(with merge-schedule-action)」に記載しています。
 
 ## Usage
