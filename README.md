@@ -95,7 +95,7 @@ job:
 ```
 
 ### Pull Requestを作成
-記事を書いて、Pull Requestを作成します。Pull Requestのdescriptionには、以下の行を含めます。
+記事を書いて、Pull Requestを作成します。Pull Requestのdescriptionには、以下の行を含めます。（`/schedule`がmerge-schedule-actionのプロパティです。）
 ```
 /title 記事のタイトル
 /tags Notion Javascript
