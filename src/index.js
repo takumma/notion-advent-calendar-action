@@ -5,10 +5,6 @@ import { Client } from '@notionhq/client';
 import { config } from 'dotenv';
 config();
 
-import dayjs from 'dayjs';
-import 'dayjs/locale/ja.js'
-dayjs.locale('ja');
-
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
