@@ -4,8 +4,6 @@ import { Client } from '@notionhq/client';
 // envs for develop
 import { config } from 'dotenv';
 config();
-import dotenvJSON from 'dotenv-json';
-dotenvJSON();
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja.js'
@@ -18,17 +16,15 @@ const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
   const body = process.env.pull_request_body // process.env.GITHUB_EVENT_PATH.pull_request_body;
-  console.log(body.split('\\r\n'));
-  console.log(getPropertiesFromBody(body));
-  const { title, date, tags } = getPropertiesFromBody(body);
-  // getArticles();
-  addArticle(title, date, tags);
+  const { title, tags, url, date } = getPropertiesFromBody(body);
+  addArticle({title: title, tags: tags, url: url, date: date});
 }
 
 const getPropertiesFromBody = (body) => {
   const result = {
     title: "",
     tags: [],
+    url: "",
     date: "",
   }
   const propertyTexts = body.split('\\r\n');
@@ -40,6 +36,9 @@ const getPropertiesFromBody = (body) => {
         break;
       case '/tags':
         result.tags = props;
+        break;
+      case '/url':
+        result.url = props.join();
         break;
       case '/date':
         result.date = props.join();
@@ -58,7 +57,12 @@ const getArticles = async () => {
   }
 }
 
-const addArticle = async (title, date, tags) => {
+const addArticle = async ({
+  title,
+  tags,
+  url,
+  date
+}) => {
   try {
     const resp = await notion.pages.create({
       parent: { database_id: DATABASE_ID },
@@ -86,6 +90,10 @@ const addArticle = async (title, date, tags) => {
               name: tag
             };
           })
+        },
+        URL: {
+          type: "url",
+          url: url,
         }
       },
     })
