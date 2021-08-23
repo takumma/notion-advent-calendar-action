@@ -1,14 +1,13 @@
-import core from '@actions/core';
-import { Client } from '@notionhq/client';
+const NotionClient = require('@notionhq/client');
 
-// envs for develop
-import { config } from 'dotenv';
-config();
+// // envs for develop
+// require('dotenv').config()
+
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
-const notion = new Client({ auth: NOTION_TOKEN});
+const notion = new NotionClient.Client({ auth: NOTION_TOKEN});
 
 const main = () => {
   const body = process.env.GITHUB_EVENT_PATH.pull_request.body; // process.env.pull_request_body
