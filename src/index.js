@@ -8,7 +8,8 @@ const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
-  const body = process.env.GITHUB_EVENT_PATH.pull_request.body; // process.env.pull_request_body
+  const eventPayload = require(process.env.GITHUB_EVENT_PATH);
+  const body = eventPayload.pull_request.body; // process.env.pull_request_body
   const { title, tags, url, date } = getPropertiesFromBody(body);
   addArticle({title: title, tags: tags, url: url, date: date});
 }
