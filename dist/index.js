@@ -1,4 +1,4 @@
-import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module"
 /******/ var __webpack_modules__ = ({
 
 /***/ 749:
@@ -2516,16 +2516,14 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("zlib");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const NotionClient = __nccwpck_require__(324);
-
+const { Client } = __nccwpck_require__(324)
 // // envs for develop
 // require('dotenv').config()
-
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
-const notion = new NotionClient.Client({ auth: NOTION_TOKEN});
+const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
   const body = process.env.GITHUB_EVENT_PATH.pull_request.body; // process.env.pull_request_body
