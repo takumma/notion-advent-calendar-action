@@ -2539,7 +2539,7 @@ const getPropertiesFromBody = (body) => {
     url: "",
     date: "",
   }
-  const propertyTexts = body.split('\\r\n');
+  const propertyTexts = body.split('\r\n');
   for(let propertyText of propertyTexts) {
     const [name, ...props] = propertyText.split(' ');
     console.log(name)
