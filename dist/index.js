@@ -2542,6 +2542,8 @@ const getPropertiesFromBody = (body) => {
   const propertyTexts = body.split('\\r\n');
   for(let propertyText of propertyTexts) {
     const [name, ...props] = propertyText.split(' ');
+    console.log(name)
+    console.log(props)
     switch (name) {
       case '/title':
         result.title = props.join(' ');
