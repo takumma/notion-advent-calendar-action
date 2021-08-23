@@ -1,8 +1,5 @@
 name: 'Notion Advent-Calendar Action'
-description: 'This is the action to add an article to Notion's calendar by utilizing Notion API.'
-outputs:
-  time:
-    description: 'description'
+description: "This is the action to add an article to Notion's calendar by utilizing Notion API."
 runs:
   using: 'node12'
   main: 'dist/index.js'
