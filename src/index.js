@@ -1,9 +1,6 @@
-import core from '@actions/core';
-import { Client } from '@notionhq/client';
-
-// envs for develop
-import { config } from 'dotenv';
-config();
+const { Client } = require("@notionhq/client")
+// // envs for develop
+// require('dotenv').config()
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
@@ -11,7 +8,8 @@ const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 const notion = new Client({ auth: NOTION_TOKEN});
 
 const main = () => {
-  const body = process.env.GITHUB_EVENT_PATH.pull_request_body; // process.env.pull_request_body
+  const eventPayload = require(process.env.GITHUB_EVENT_PATH);
+  const body = eventPayload.pull_request.body; // process.env.pull_request_body
   const { title, tags, url, date } = getPropertiesFromBody(body);
   addArticle({title: title, tags: tags, url: url, date: date});
 }
@@ -23,9 +21,11 @@ const getPropertiesFromBody = (body) => {
     url: "",
     date: "",
   }
-  const propertyTexts = body.split('\\r\n');
+  const propertyTexts = body.split('\r\n');
   for(let propertyText of propertyTexts) {
     const [name, ...props] = propertyText.split(' ');
+    console.log(name)
+    console.log(props)
     switch (name) {
       case '/title':
         result.title = props.join(' ');
