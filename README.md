@@ -65,8 +65,52 @@ Notion APIの[Getting started](https://developers.notion.com/docs/getting-starte
 - 作成したintegrationを選択してinviteをする
 - integrationのSecretsとページのDatabase IDをコピーしておく。
 
+### GIthub App の作成
+[merge-schedule-action](https://github.com/marketplace/actions/merge-schedule) をトリガーにして notion-advent-calendar のワークフローを実行するために、Github Appを作成する必要があります。
+
+1. Githubの右上からSettingを開く
+2. Developer settings -> Github Apps -> New Github App から、Github App を作成します。
+3. 名前やHomePageなどは適当に設定してください。WebHookは使わないと思うのでActiveのチェックは外して大丈夫です。
+4. Permissionsは、とりあえず actions, checks, contents, deployments, issues, pull requests, repository projects, Commit statuses あたりを設定します（ここら辺不要なPermissionを見つけれてないのでそのうち更新します...）
+5. **Where can this GitHub App be installed?** は、**Only on this account** を選択しておきます。
+6. Create Github App で作成したら、APP_ID と Private Key をメモしておきます。
+
+Github App を作成したら、記事を管理してるリポジトリにインストールしておきましょう。
+
 ### merge-schedule-actionのワークフローを作成
-[merge-schedule-action](https://github.com/marketplace/actions/merge-schedule)のUsageを参考にして、記事を管理しているリポジトリにワークフローを作成してください。
+[merge-schedule-action](https://github.com/marketplace/actions/merge-schedule) を使って、予約マージをするためのワークフローを作成します。
+
+##### ワークフローのサンプル
+```
+name: Merge Schedule
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+  schedule:
+    - cron: 0 0,6,12,18 * * *
+
+jobs:
+  merge_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+      - name: Merge Schedule
+        uses: gr2m/merge-schedule-action@v1
+        with:
+          time_zone: "Asia/Tokyo"
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+```
+
+Secrets の APP_ID と PRIVATE_KEY にはそれぞれ先ほど作成した Github App の APP_ID と Private key を設定します。
 
 ### notion-advent-calender-actionのワークフローを作成
 記事を管理しているリポジトリで、Setting -> Secrets -> New repository secretから、
@@ -74,7 +118,7 @@ Notion APIの[Getting started](https://developers.notion.com/docs/getting-starte
 
 ワークフローを作成します。
 ```yml
-name: Notion Advent Calender
+name: Notion Advent Calendar
 on:
   pull_request:
     branches:
@@ -102,5 +146,5 @@ job:
 /tags Notion Javascript
 /url http://example.com
 /date 2021-8-18
-/schedule 2021-8-18
+/schedule 2021-8-18-12:00
 ```
