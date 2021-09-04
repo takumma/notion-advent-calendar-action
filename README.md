@@ -132,7 +132,7 @@ job:
     # Pull RequestがMergeされたときに実行されるように設定
     if: github.event.pull_request.merged == true
     steps:
-      - uses: takumma/notion-advent-calender-action@v1
+      - uses: takumma/notion-advent-calender-action@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
