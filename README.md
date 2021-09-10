@@ -148,3 +148,6 @@ job:
 /date 2021-8-18
 /schedule 2021-8-18-12:00
 ```
+
+Pull Requestのテンプレートも用意しているので、良ければ利用してください。
+[pull_request_template.md](./.github/pull_request_template.md)
