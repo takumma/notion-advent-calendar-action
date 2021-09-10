@@ -152,4 +152,4 @@ Write an article and create a pull request. include the following line in the de
 ```
 
 A pull request template is also available if you want to use it.
-[pull_request_template.md](. /.github/pull_request_template.md)
+[pull_request_template.md](/.github/pull_request_template.md)
