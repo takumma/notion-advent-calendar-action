@@ -142,9 +142,14 @@ job:
 ### Create a Pull Request
 Write an article and create a pull request. include the following line in the description of the pull request. Include the following line in the description of the pull request (where `/schedule` is a property of merge-schedule-action).
 (where `/schedule` is a property of merge-schedule-action)
+
+```
 /title Title of the article
 /tags Notion Javascript
 /url http://example.com
 /date 2021-8-18
 /schedule 2021-8-18-12:00
 ```
+
+A pull request template is also available if you want to use it.
+[pull_request_template.md](. /.github/pull_request_template.md)
